@@ -5,8 +5,7 @@
 
 ---
 
-### 🗺 [→ Open the Exercise Guide](https://[your-username].github.io/[your-repo-name]/Brief-3_Exercise_v1-2.html)
-
+### 🗺 [→ Open the Exercise Guide](https://pessoacolombo.github.io/urban-fringes-basel/)
 ---
 
 ## About this guide
