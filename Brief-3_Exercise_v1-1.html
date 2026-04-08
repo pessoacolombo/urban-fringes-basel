@@ -1,0 +1,1512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fringe Observation Exercise — Urbanisms of the Health Industry</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@300;400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap');
+
+  :root {
+    --ink: #1a1a18;
+    --paper: #f5f0e8;
+    --warm-mid: #d4c9b0;
+    --accent-red: #b83232;
+    --accent-blue: #2a4a6b;
+    --accent-ochre: #c8832a;
+    --light-rule: #ddd5c0;
+    --sidebar-bg: #2a4a6b;
+    --sidebar-text: #e8dfc8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 300;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 72px 60px 56px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 59px,
+      rgba(255,255,255,0.035) 59px,
+      rgba(255,255,255,0.035) 60px
+    );
+    pointer-events: none;
+  }
+  .hero-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-ochre);
+    margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 400;
+    line-height: 1.15;
+    max-width: 780px;
+    margin-bottom: 20px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent-ochre);
+  }
+  .hero-sub {
+    font-size: 14px;
+    color: #aaa;
+    max-width: 560px;
+    line-height: 1.6;
+    margin-bottom: 40px;
+  }
+  /* FIX 3: quote-pull in hero needs light colour and top margin */
+  .hero .quote-pull {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.6);
+    border-left: 3px solid var(--accent-ochre);
+    padding-left: 20px;
+    margin-top: 32px;
+    max-width: 540px;
+  }
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.6);
+  }
+  .tag.active {
+    border-color: var(--accent-ochre);
+    color: var(--accent-ochre);
+  }
+
+  /* ── OVERVIEW STRIP ── */
+  .overview-strip {
+    background: var(--accent-blue);
+    color: var(--sidebar-text);
+    padding: 32px 60px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 32px;
+  }
+  .overview-item {
+    border-left: 2px solid rgba(255,255,255,0.2);
+    padding-left: 16px;
+  }
+  .overview-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-ochre);
+    margin-bottom: 6px;
+  }
+  .overview-value {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.4;
+  }
+
+  /* ── LAYOUT ── */
+  .page-body {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 60px 80px;
+  }
+
+  /* ── SECTION HEADERS ── */
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin: 60px 0 28px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--light-rule);
+  }
+  .section-number {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--accent-ochre);
+    text-transform: uppercase;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 400;
+  }
+
+  /* ── INTRO TEXT ── */
+  .intro-block {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    margin: 40px 0;
+    padding: 36px 40px;
+    background: white;
+    border-left: 4px solid var(--accent-red);
+  }
+  @media (max-width: 720px) { .intro-block { grid-template-columns: 1fr; } }
+  .intro-block p { font-size: 14px; line-height: 1.75; }
+  .quote-pull {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--accent-blue);
+    border-left: 3px solid var(--accent-blue);
+    padding-left: 20px;
+    align-self: center;
+  }
+
+  /* ── METHODOLOGY OVERVIEW ── */
+  .method-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin: 28px 0 44px;
+    background: var(--light-rule);
+  }
+  @media (max-width: 720px) { .method-grid { grid-template-columns: 1fr; } }
+  .method-card {
+    background: var(--paper);
+    padding: 28px 28px 32px;
+    position: relative;
+  }
+  .method-card::before {
+    content: attr(data-num);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 48px;
+    font-weight: 300;
+    color: var(--light-rule);
+    position: absolute;
+    top: 12px;
+    right: 20px;
+    line-height: 1;
+  }
+  .method-icon {
+    width: 36px;
+    height: 36px;
+    margin-bottom: 16px;
+    opacity: 0.85;
+  }
+  .method-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  .method-card p {
+    font-size: 13px;
+    line-height: 1.65;
+    color: #555;
+  }
+  .method-card.highlight {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .method-card.highlight h3 { color: var(--accent-ochre); }
+  .method-card.highlight p { color: var(--sidebar-text); }
+  .method-card.highlight::before { color: rgba(255,255,255,0.06); }
+
+  /* ── SITES ── */
+  .sites-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin: 24px 0 44px;
+    background: var(--light-rule);
+  }
+  @media (max-width: 680px) { .sites-grid { grid-template-columns: 1fr; } }
+  .site-card {
+    background: var(--paper);
+    padding: 32px;
+  }
+  .site-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-ochre);
+    margin-bottom: 4px;
+  }
+  .site-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    margin-bottom: 16px;
+  }
+  .site-card p { font-size: 13.5px; line-height: 1.7; color: #444; margin-bottom: 10px; }
+  .fringe-list {
+    margin: 14px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .fringe-list li {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    padding: 8px 12px;
+    background: white;
+    border-left: 3px solid var(--accent-blue);
+    margin-bottom: 4px;
+    color: var(--accent-blue);
+  }
+  .fringe-list li span {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #999;
+    display: block;
+    font-family: 'IBM Plex Sans', sans-serif;
+  }
+
+  /* ── ILLUSTRATION: FRINGE DIAGRAM ── */
+  .diagram-container {
+    margin: 32px 0 48px;
+    background: white;
+    padding: 36px 36px 24px;
+    border-top: 3px solid var(--ink);
+  }
+  .diagram-caption {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: #888;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  /* ── PILAR BLOCKS ── */
+  .pilar {
+    margin-bottom: 60px;
+  }
+  .pilar-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 24px;
+    padding: 20px 28px;
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .pilar-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 32px;
+    font-weight: 300;
+    color: var(--accent-ochre);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .pilar-title-block h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 400;
+  }
+  .pilar-title-block p {
+    font-size: 12px;
+    color: #aaa;
+    margin-top: 4px;
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.08em;
+  }
+
+  /* ── CONTENT BLOCKS ── */
+  .content-block {
+    background: white;
+    padding: 28px 32px;
+    margin-bottom: 16px;
+    border-left: 3px solid var(--light-rule);
+  }
+  .content-block.accent { border-left-color: var(--accent-red); }
+  .content-block.blue { border-left-color: var(--accent-blue); }
+  .content-block h4 {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 12px;
+    color: #444;
+  }
+  .content-block p { font-size: 14px; line-height: 1.7; margin-bottom: 8px; }
+  .content-block p:last-child { margin-bottom: 0; }
+
+  /* ── TIME GRID ── */
+  .time-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin: 16px 0;
+  }
+  @media (max-width: 680px) { .time-grid { grid-template-columns: repeat(2, 1fr); } }
+  .time-slot {
+    background: var(--paper);
+    padding: 16px 12px;
+    text-align: center;
+    border: 1px solid var(--light-rule);
+  }
+  .time-slot .time {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--accent-blue);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .time-slot .time-label {
+    font-size: 11px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .duration-note {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--accent-red);
+    letter-spacing: 0.06em;
+    margin-top: 6px;
+  }
+
+  /* ── OBSERVATION CATEGORIES ── */
+  .obs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 16px 0;
+  }
+  @media (max-width: 680px) { .obs-grid { grid-template-columns: 1fr; } }
+  .obs-category {
+    background: var(--paper);
+    padding: 18px 20px;
+    border: 1px solid var(--light-rule);
+  }
+  .obs-category h5 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-ochre);
+    margin-bottom: 10px;
+  }
+  .obs-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .pill {
+    font-size: 12px;
+    padding: 4px 10px;
+    border: 1px solid var(--warm-mid);
+    color: #555;
+    background: white;
+  }
+  .pill.active-use { border-color: var(--accent-blue); color: var(--accent-blue); }
+  .pill.static-use { border-color: var(--accent-red); color: var(--accent-red); }
+
+  /* ── SURVEY BLOCK ── */
+  .survey-question {
+    background: white;
+    padding: 24px 28px;
+    margin-bottom: 12px;
+    border-top: 2px solid var(--light-rule);
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+  @media (max-width: 720px) { .survey-question { grid-template-columns: 1fr; } }
+  .survey-question:hover { background: #fafaf7; }
+  .q-meta { }
+  .q-code {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent-ochre);
+    margin-bottom: 4px;
+  }
+  .q-type-badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    padding: 3px 8px;
+    background: var(--paper);
+    border: 1px solid var(--light-rule);
+    color: #666;
+    display: inline-block;
+    margin-top: 6px;
+  }
+  .q-text {
+    font-size: 14.5px;
+    font-weight: 500;
+    margin-bottom: 12px;
+    font-family: 'Playfair Display', serif;
+  }
+  .q-options {
+    list-style: none;
+    padding: 0;
+  }
+  .q-options li {
+    font-size: 13px;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--light-rule);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #444;
+  }
+  .q-options li:last-child { border-bottom: none; }
+  .q-options li::before {
+    content: '';
+    width: 14px;
+    height: 14px;
+    border: 1px solid #bbb;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: inline-block;
+  }
+  .q-options li.multi::before { border-radius: 2px; }
+  .q-options li.sub {
+    padding-left: 24px;
+    font-style: italic;
+    color: #777;
+    font-size: 12px;
+  }
+  .q-options li.sub::before { border-color: #ddd; }
+  .q-options li.na {
+    color: #aaa;
+    font-style: italic;
+  }
+  /* FIX 2: conditional-note as li child */
+  .q-options li.conditional {
+    display: block;
+    padding: 4px 0 8px 24px;
+    border-bottom: none;
+  }
+  .q-options li.conditional::before { display: none; }
+  .conditional-note {
+    font-size: 11px;
+    font-style: italic;
+    color: var(--accent-blue);
+    padding: 6px 10px;
+    background: rgba(42,74,107,0.06);
+    border-left: 2px solid var(--accent-blue);
+    display: block;
+  }
+  .q-divider {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #999;
+    padding: 16px 28px 6px;
+    background: white;
+    border-top: 2px solid var(--ink);
+    margin-top: 24px;
+  }
+
+  /* ── RECORDING SHEET DIAGRAM ── */
+  .sheet-preview {
+    border: 1px solid var(--warm-mid);
+    background: white;
+    margin: 24px 0;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .sheet-header-bar {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .sheet-body {
+    padding: 20px;
+  }
+  .sheet-row {
+    display: grid;
+    grid-template-columns: 40px 100px 90px 1fr 90px;
+    gap: 0;
+    font-size: 11px;
+  }
+  .sheet-row.header {
+    background: var(--paper);
+    border-bottom: 2px solid var(--ink);
+    font-weight: 500;
+    padding: 8px 0;
+  }
+  .sheet-row.data {
+    border-bottom: 1px solid var(--light-rule);
+    padding: 7px 0;
+    color: #666;
+  }
+  .sheet-col { padding: 0 8px; }
+  .sheet-note { font-size: 11px; color: #999; margin-top: 12px; }
+
+  /* ── SPATIAL DESCRIPTION BOX ── */
+  .mapping-tasks {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 20px 0;
+  }
+  @media (max-width: 680px) { .mapping-tasks { grid-template-columns: 1fr; } }
+  .map-task {
+    padding: 20px 18px;
+    background: white;
+    border-top: 3px solid var(--light-rule);
+  }
+  .map-task.t1 { border-top-color: var(--accent-red); }
+  .map-task.t2 { border-top-color: var(--accent-blue); }
+  .map-task.t3 { border-top-color: var(--accent-ochre); }
+  .map-task h5 {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+  .map-task p { font-size: 12.5px; color: #555; line-height: 1.6; }
+  .map-task ul { padding-left: 16px; margin-top: 8px; }
+  .map-task ul li { font-size: 12px; color: #666; margin-bottom: 3px; }
+
+  /* ── GEHL REFERENCE BOX ── */
+  .gehl-box {
+    background: var(--accent-blue);
+    color: var(--sidebar-text);
+    padding: 28px 32px;
+    margin: 32px 0;
+    display: grid;
+    grid-template-columns: 3px 1fr;
+    gap: 24px;
+  }
+  .gehl-line { background: var(--accent-ochre); }
+  .gehl-box h4 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-ochre);
+    margin-bottom: 10px;
+  }
+  .gehl-box p { font-size: 13.5px; line-height: 1.7; margin-bottom: 6px; }
+  .gehl-box em { font-style: italic; color: #c8b892; }
+
+  /* ── OUTPUTS SECTION ── */
+  .outputs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin: 24px 0;
+    background: var(--light-rule);
+  }
+  @media (max-width: 680px) { .outputs-grid { grid-template-columns: 1fr; } }
+  .output-item {
+    background: var(--paper);
+    padding: 24px;
+  }
+  .output-item h5 {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+  .output-item p { font-size: 12.5px; color: #555; line-height: 1.6; }
+  .output-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-ochre);
+    margin-bottom: 8px;
+  }
+
+  /* ── LOGISTICS TABLE ── */
+  .logistics-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 13px;
+  }
+  .logistics-table th {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-align: left;
+    padding: 10px 16px;
+    background: var(--ink);
+    color: var(--accent-ochre);
+    font-weight: 400;
+  }
+  .logistics-table td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--light-rule);
+    vertical-align: top;
+    background: white;
+  }
+  .logistics-table tr:nth-child(even) td { background: #fafaf7; }
+  .logistics-table td:first-child {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--accent-blue);
+    white-space: nowrap;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    color: rgba(255,255,255,0.4);
+    padding: 32px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  footer a { color: var(--accent-ochre); text-decoration: none; }
+
+  /* ── PRINT ── */
+  @media print {
+    .hero { background: #1a1a18 !important; -webkit-print-color-adjust: exact; }
+    .overview-strip { background: #2a4a6b !important; -webkit-print-color-adjust: exact; }
+  }
+
+  /* ══════════════════════════════════════════
+     MOBILE — max-width: 640px
+     Targets iPhone SE (375px) and similar
+  ══════════════════════════════════════════ */
+  @media (max-width: 640px) {
+
+    /* ── Global spacing ── */
+    .hero {
+      padding: 40px 20px 36px;
+    }
+    .hero-sub { max-width: 100%; }
+    .hero .quote-pull { font-size: 14px; margin-top: 24px; }
+
+    .overview-strip {
+      padding: 24px 20px;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .page-body {
+      padding: 0 20px 48px;
+    }
+
+    /* ── Section headers ── */
+    .section-header { margin: 40px 0 20px; }
+    .section-title { font-size: 20px; }
+
+    /* ── Intro block ── */
+    .intro-block {
+      padding: 24px 20px;
+      margin: 24px 0;
+      display: block;
+    }
+
+    /* ── Gehl box ── */
+    .gehl-box {
+      padding: 20px;
+      grid-template-columns: 3px 1fr;
+      gap: 16px;
+      margin: 20px 0;
+    }
+    .gehl-box p { font-size: 13px; }
+
+    /* ── Method grid ── */
+    .method-grid { grid-template-columns: 1fr; }
+    .method-card { padding: 22px 20px 26px; }
+
+    /* ── Sites grid ── */
+    .sites-grid { grid-template-columns: 1fr; }
+    .site-card { padding: 22px 20px; }
+
+    /* ── Diagram / map ── */
+    .diagram-container {
+      padding: 16px 16px 16px;
+      margin: 20px 0 32px;
+    }
+    #situation-map { height: 360px !important; }
+    .diagram-caption { font-size: 10px; }
+
+    /* ── Content blocks ── */
+    .content-block { padding: 20px; }
+    .content-block p { font-size: 13px; }
+
+    /* ── Time grid ── */
+    .time-grid { grid-template-columns: repeat(2, 1fr); }
+    .time-slot .time { font-size: 16px; }
+
+    /* ── Obs grid ── */
+    .obs-grid { grid-template-columns: 1fr; }
+
+    /* ── Mapping tasks ── */
+    .mapping-tasks { grid-template-columns: 1fr; }
+
+    /* ── Outputs grid ── */
+    .outputs-grid { grid-template-columns: 1fr; }
+
+    /* ── Survey questions ── */
+    .survey-question {
+      grid-template-columns: 1fr;
+      padding: 16px;
+      gap: 12px;
+    }
+    .q-text { font-size: 13.5px; }
+    .q-options li { font-size: 12px; }
+    .q-divider { padding: 14px 16px 6px; }
+
+    /* ── Recording sheet — stack columns on mobile ── */
+    .sheet-header-bar {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+      font-size: 9px;
+    }
+    .sheet-row {
+      grid-template-columns: 28px 1fr;
+      font-size: 10px;
+    }
+    /* Hide Activity and Notes columns on very small screens,
+       keep # and combined middle columns */
+    .sheet-col:nth-child(3),
+    .sheet-col:nth-child(4),
+    .sheet-col:nth-child(5) { display: none; }
+    .sheet-col:nth-child(2) { grid-column: 2 / -1; }
+
+    /* ── Logistics table — scroll horizontally ── */
+    .logistics-table-wrapper {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .logistics-table {
+      min-width: 520px;
+      font-size: 12px;
+    }
+    .logistics-table td:first-child {
+      white-space: normal; /* override nowrap on mobile */
+      min-width: 110px;
+    }
+    .logistics-table th,
+    .logistics-table td { padding: 8px 10px; }
+
+    /* ── Footer ── */
+    footer {
+      padding: 24px 20px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 9px;
+    }
+
+    /* ── Tags ── */
+    .hero-tags { gap: 6px; }
+    .tag { font-size: 9px; padding: 4px 8px; }
+
+    /* ── Fringe list ── */
+    .fringe-list li { font-size: 11px; }
+
+    /* ── Pills ── */
+    .pill { font-size: 11px; padding: 3px 8px; }
+  }
+
+  /* ── Medium screens (tablets) ── */
+  @media (min-width: 641px) and (max-width: 900px) {
+    .hero { padding: 48px 32px 40px; }
+    .overview-strip { padding: 24px 32px; }
+    .page-body { padding: 0 32px 60px; }
+    footer { padding: 24px 32px; }
+    .survey-question { grid-template-columns: 160px 1fr; }
+  }
+</style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-meta">Urbanisms of the Health Industry · UAG Track · Critical Urbanisms · MA Programme · University of Basel</div>
+  <h1>Brief 3<br><em>Exercise Guide</em></h1>
+  <p class="hero-sub">A structured method for reading the interstitial spaces between the Roche and Novartis campuses and the fabric of Basel's urban life — following Gehl's eye-level approach.</p>
+  <!-- FIX 3: quote-pull inside hero uses .hero .quote-pull rule with correct light colour -->
+  <p class="quote-pull">"A good city is like a good party — people stay longer than really necessary because they are enjoying themselves."<br><br>— Jan Gehl</p>
+</header>
+
+<!-- OVERVIEW STRIP -->
+<div class="overview-strip">
+  <div class="overview-item">
+    <div class="overview-label">Sites</div>
+    <div class="overview-value">Roche Campus &amp;<br>Novartis Campus, Basel</div>
+  </div>
+  <div class="overview-item">
+    <div class="overview-label">Focus Area</div>
+    <div class="overview-value">2 "fringes" per campus<br>(4 areas total)</div>
+  </div>
+  <div class="overview-item">
+    <div class="overview-label">Fieldwork Protocol</div>
+    <div class="overview-value">Mapping and structured observations<br>focusing on users and usages</div>
+  </div>
+  <div class="overview-item">
+    <div class="overview-label">Work organization</div>
+    <div class="overview-value">4 teams with<br>4 students each</div>
+  </div>
+</div>
+
+<!-- PAGE BODY -->
+<div class="page-body">
+
+  <!-- SECTION 0: CONTEXT & RATIONALE -->
+  <div class="section-header">
+    <span class="section-number">00 —</span>
+    <span class="section-title">Context &amp; Rationale</span>
+  </div>
+
+  <div class="intro-block">
+    <p>The campuses of Roche and Novartis are not merely work places or architectural landmarks — they become urban actors. Each campus occupies a substantial share of Basel's built fabric, enclosed by fences, gates, security checkpoints, and the quiet signals of institutional territory. But what happens at the boundary between these campuses and the surrounding city?<br><br>
+    This exercise asks you to look carefully at those thresholds: the <strong>fringe spaces</strong> where urban forms of Big Pharma sites meet everyday street life. Is there dialogue, or separation? Porosity, or fortification? The question is empirical, and answering it requires systematic observation.</p>
+  </div>
+
+  <!-- GEHL FRAMEWORK -->
+  <div class="gehl-box">
+    <div class="gehl-line"></div>
+    <div>
+      <h4>Gehl's Eye-Level Approach — A Primer</h4>
+      <p>This exercise is largely inspired by Jan Gehl's methodology to assess utilization and quality of public spaces, building on the premise the latter are critical for sustainable and inclusive city-life. This approach rests on a deceptively simple premise: cities are <em>experienced at eye level</em>. Before we can design or critique urban form, we must learn to read it as its users do — at walking pace, from the street, engaging all the senses.</p>
+      <p>To guide observations of uses in public spaces, Gehl distinguishes between <em>necessary activities</em> (errands, commuting), <em>optional activities</em> (sitting, strolling), and <em>social activities</em> (conversation, play). The presence of optional and social activities is a reliable indicator of environmental quality: people choose to linger only when a space invites it.</p>
+      <!-- FIX 5: font-weight: bold instead of font-weight: inherit -->
+      <p>The <a href="https://www.gehlpeople.com/knowledge-hub/publications/people-and-public-spaces/" target="_blank" style="color: #c8832a; font-weight: bold; font-style: italic;">Public Space / Public Life (PSPL) survey</a> is Gehl's core fieldwork tool. It maps flows, counts users, categorises activities, and records spatial qualities over time. This exercise adapts that framework for a specific analytical question: how do pharmaceutical campus edges mediate (or block) urban life?</p>
+    </div>
+  </div>
+
+  <!-- METHODOLOGY OVERVIEW -->
+  <div class="section-header">
+    <span class="section-number">01 —</span>
+    <span class="section-title">Three-Pillar Methodology</span>
+  </div>
+
+  <div class="method-grid">
+    <div class="method-card" data-num="1">
+      <svg class="method-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="4" y="4" width="28" height="28" stroke="#2a4a6b" stroke-width="1.5" fill="none"/>
+        <line x1="4" y1="14" x2="32" y2="14" stroke="#2a4a6b" stroke-width="0.75"/>
+        <line x1="4" y1="24" x2="32" y2="24" stroke="#2a4a6b" stroke-width="0.75"/>
+        <line x1="14" y1="4" x2="14" y2="32" stroke="#2a4a6b" stroke-width="0.75"/>
+        <rect x="14" y="14" width="18" height="10" fill="#2a4a6b" opacity="0.15"/>
+        <line x1="0" y1="18" x2="36" y2="18" stroke="#c8832a" stroke-width="1" stroke-dasharray="2 3"/>
+      </svg>
+      <h3>Spatial Description</h3>
+      <p>Map the selected fringe: materiality of ground and façade, physical barriers, transitions, and the spatial logic of the boundary.</p>
+    </div>
+    <div class="method-card" data-num="2">
+      <svg class="method-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="18" cy="18" r="13" stroke="#c8832a" stroke-width="1.5" fill="none"/>
+        <line x1="18" y1="5" x2="18" y2="18" stroke="#c8832a" stroke-width="1.5"/>
+        <line x1="18" y1="18" x2="27" y2="18" stroke="#c8b892" stroke-width="1"/>
+        <circle cx="18" cy="18" r="2" fill="#c8832a"/>
+      </svg>
+      <h3>Structured Observation</h3>
+      <p>Systematically measure specific, observable behaviors (predetermined types of activity) in real-time, focusing on frequency rather than interpretation.</p>
+    </div>
+    <div class="method-card" data-num="3">
+      <svg class="method-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="6" y="4" width="24" height="28" rx="1" stroke="#b83232" stroke-width="1.5" fill="none"/>
+        <line x1="11" y1="12" x2="25" y2="12" stroke="#b83232" stroke-width="1"/>
+        <line x1="11" y1="17" x2="25" y2="17" stroke="#b83232" stroke-width="1"/>
+        <line x1="11" y1="22" x2="20" y2="22" stroke="#b83232" stroke-width="1"/>
+        <circle cx="9" cy="12" r="1.5" fill="#b83232"/>
+        <circle cx="9" cy="17" r="1.5" fill="#b83232"/>
+        <circle cx="9" cy="22" r="1.5" fill="#b83232"/>
+      </svg>
+      <h3>Short Survey</h3>
+      <p>A structured questionnaire capturing frequency, purpose, and profile of users who consent to a brief conversation. Minimum 12 per fringe.</p>
+    </div>
+  </div>
+
+  <p style="font-size:13.5px; color:#555; line-height:1.75; margin-bottom:8px;">These three pillars are designed to be complementary, not redundant. Spatial description gives you the <em>container</em>; timed observation gives you the <em>quantitative flow</em>; the survey gives you the <em>individual voice</em>. Together they build toward a multi-layered portrait of the fringe that can support both analytical writing and spatial/visual communication in the final exhibition.</p>
+
+  <!-- SITES -->
+  <div class="section-header">
+    <span class="section-number">02 —</span>
+    <span class="section-title">Sites &amp; Fringe Areas</span>
+  </div>
+
+  <div class="diagram-container">
+    <div id="situation-map" style="width:100%;height:560px;"></div>
+    <div class="diagram-caption">FIG. 01 — Situation map of Basel showing both research sites. Campus boundaries, fringe zones, and observation points from uploaded GeoPackage files. Click any observation point for details. Requires internet connection to load map tiles. © OpenStreetMap contributors © CARTO.</div>
+  </div>
+
+  <script>
+  function initMap() {
+    var el = document.getElementById('situation-map');
+    if (!el || typeof L === 'undefined') {
+      // Leaflet not ready yet — retry in 200ms
+      setTimeout(initMap, 200);
+      return;
+    }
+    // Already initialised guard
+    if (el._leaflet_id) return;
+
+    var campusData = {"type":"FeatureCollection","features":[
+      {"type":"Feature","properties":{"Name":"Novartis"},"geometry":{"type":"MultiPolygon","coordinates":[[[[7.58300371,47.57585239],[7.5834238,47.57391245],[7.58358261,47.57297408],[7.58352967,47.57225707],[7.58348671,47.5710153],[7.58272762,47.57094429],[7.58091951,47.57093075],[7.57920959,47.57090705],[7.57918589,47.57139463],[7.57913848,47.57152329],[7.57861704,47.57230207],[7.5784105,47.57223435],[7.57770039,47.57326885],[7.57739842,47.57308999],[7.57730725,47.57300361],[7.57701245,47.57312144],[7.57642062,47.57258965],[7.57514547,47.57390768],[7.57416195,47.57485404],[7.57397897,47.5750942],[7.57350722,47.57555451],[7.57348149,47.57562027],[7.57365018,47.57595764],[7.57434779,47.57579467],[7.57482812,47.57570318],[7.5753742,47.57618636],[7.57640346,47.57645226],[7.57885687,47.57666449],[7.58300371,47.57585239]]]]}},
+      {"type":"Feature","properties":{"Name":"Roche"},"geometry":{"type":"MultiPolygon","coordinates":[[[[7.60455859,47.55892057],[7.60442412,47.55982198],[7.60546919,47.55991435],[7.60530524,47.56084699],[7.60529059,47.56094448],[7.60542875,47.56096087],[7.60539831,47.56118567],[7.60612423,47.56124422],[7.60758677,47.56141279],[7.6091693,47.56174308],[7.6094777,47.56077326],[7.60988917,47.56083204],[7.61032191,47.5595329],[7.60910963,47.55935371],[7.60936538,47.55815113],[7.60600125,47.55751967],[7.60591627,47.55786289],[7.60571517,47.55855293],[7.60560602,47.55899881],[7.60455859,47.55892057]]]]}}
+    ]};
+
+    var pointData = {"type":"FeatureCollection","features":[
+      {"type":"Feature","properties":{"id":1,"obs_pt":"Roche – Promenade","campus":"Roche"},"geometry":{"type":"Point","coordinates":[7.60911833,47.55810264]}},
+      {"type":"Feature","properties":{"id":2,"obs_pt":"Roche – River park","campus":"Roche"},"geometry":{"type":"Point","coordinates":[7.61001054,47.55894311]}},
+      {"type":"Feature","properties":{"id":4,"obs_pt":"Roche – East park","campus":"Roche"},"geometry":{"type":"Point","coordinates":[7.6093572,47.56121102]}},
+      {"type":"Feature","properties":{"id":5,"obs_pt":"Roche – North road","campus":"Roche"},"geometry":{"type":"Point","coordinates":[7.60503345,47.56115984]}},
+      {"type":"Feature","properties":{"id":6,"obs_pt":"Roche – East road","campus":"Roche"},"geometry":{"type":"Point","coordinates":[7.60448514,47.55939201]}},
+      {"type":"Feature","properties":{"id":7,"obs_pt":"Roche – Middle road","campus":"Roche"},"geometry":{"type":"Point","coordinates":[7.6050949,47.55895242]}},
+      {"type":"Feature","properties":{"id":8,"obs_pt":"Novartis – Rhine","campus":"Novartis"},"geometry":{"type":"Point","coordinates":[7.58352176,47.57200321]}},
+      {"type":"Feature","properties":{"id":9,"obs_pt":"Novartis – South","campus":"Novartis"},"geometry":{"type":"Point","coordinates":[7.58163491,47.57092784]}},
+      {"type":"Feature","properties":{"id":10,"obs_pt":"Novartis – Park","campus":"Novartis"},"geometry":{"type":"Point","coordinates":[7.58302696,47.57256399]}},
+      {"type":"Feature","properties":{"id":11,"obs_pt":"Novartis – Fabrikstr","campus":"Novartis"},"geometry":{"type":"Point","coordinates":[7.57940398,47.57336871]}},
+      {"type":"Feature","properties":{"id":12,"obs_pt":"Novartis – Forum","campus":"Novartis"},"geometry":{"type":"Point","coordinates":[7.57949475,47.57254527]}},
+      {"type":"Feature","properties":{"id":13,"obs_pt":"Novartis – West gate","campus":"Novartis"},"geometry":{"type":"Point","coordinates":[7.5772773,47.57335574]}}
+    ]};
+
+    var fringeData = {"type":"FeatureCollection","features":[
+      {"type":"Feature","properties":{"Fringe":"Roche – East"},"geometry":{"type":"LineString","coordinates":[[7.609365377647917,47.55815112616661],[7.609109630274859,47.559353710107885],[7.610321912983663,47.55953290397223],[7.609889172302294,47.5608320392068],[7.609477700983375,47.560773257589815],[7.609169299985031,47.56174307967566]]}},
+      {"type":"Feature","properties":{"Fringe":"Roche – West"},"geometry":{"type":"LineString","coordinates":[[7.605398307071005,47.56118567442923],[7.604654051261876,47.56114521089587],[7.60470339831268,47.56079388959386],[7.605305240107073,47.5608469932816],[7.6054691857538215,47.55991435205983],[7.604424122853404,47.55982198373257],[7.6045585885836005,47.55892056531903],[7.605606020680606,47.55899881331855]]}},
+      {"type":"Feature","properties":{"Fringe":"Novartis – Rhine"},"geometry":{"type":"LineString","coordinates":[[7.57920959021984,47.570907045143784],[7.582727617985882,47.57094429086604],[7.583486714868006,47.571015303023614],[7.583529671546457,47.5722570738884],[7.583582605240225,47.57297408483125],[7.583423804158922,47.57391245485713]]}},
+      {"type":"Feature","properties":{"Fringe":"Novartis – Central"},"geometry":{"type":"LineString","coordinates":[[7.580173991851888,47.57226276884057],[7.578628748932912,47.57450586340037],[7.578578902387139,47.574483709380026],[7.57758197147167,47.573492316969656],[7.577382585288576,47.57344247042388],[7.577133352559708,47.57326523826113],[7.5770124469300955,47.57312143871488],[7.576420619005686,47.57258965130454]]}}
+    ]};
+
+    var map = L.map('situation-map', { zoomControl: true, scrollWheelZoom: false });
+
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/">CARTO</a>',
+      subdomains: 'abcd', maxZoom: 19
+    }).addTo(map);
+
+    var campusColors = { 'Novartis': '#2a4a6b', 'Roche': '#1a1a18' };
+
+    var campusLayer = L.geoJSON(campusData, {
+      style: function(f) {
+        var c = campusColors[f.properties.Name] || '#555';
+        return { color: c, weight: 2.5, fillColor: c, fillOpacity: 0.15 };
+      },
+      onEachFeature: function(f, layer) {
+        var name = f.properties.Name;
+        layer.bindTooltip(
+          '<span style="font-family:\'IBM Plex Mono\',monospace;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:' + (campusColors[name]||'#333') + ';">' + name + ' CAMPUS</span>',
+          { permanent: true, direction: 'center', className: 'campus-lbl' }
+        );
+      }
+    }).addTo(map);
+
+    L.geoJSON(fringeData, {
+      style: { color: '#c8832a', weight: 5, opacity: 0.85, dashArray: '8 5' },
+      onEachFeature: function(f, layer) {
+        layer.bindTooltip(
+          '<span style="font-family:\'IBM Plex Mono\',monospace;font-size:10px;color:#c8832a;font-weight:600;">' + f.properties.Fringe + '</span>',
+          { sticky: true, className: 'fringe-lbl' }
+        );
+      }
+    }).addTo(map);
+
+    L.geoJSON(pointData, {
+      pointToLayer: function(f, latlng) {
+        return L.circleMarker(latlng, { radius: 7, color: '#fff', weight: 2, fillColor: '#b83232', fillOpacity: 0.92 });
+      },
+      onEachFeature: function(f, layer) {
+        layer.bindPopup(
+          '<div style="font-family:\'IBM Plex Mono\',monospace;min-width:170px;">'
+          + '<div style="font-size:9px;text-transform:uppercase;letter-spacing:0.12em;color:' + (campusColors[f.properties.campus]||'#555') + ';margin-bottom:4px;">' + f.properties.campus + '</div>'
+          + '<div style="font-size:13px;font-weight:700;color:#1a1a18;margin-bottom:2px;">' + f.properties.obs_pt + '</div>'
+          + '<div style="font-size:10px;color:#aaa;">Point #' + f.properties.id + '</div>'
+          + '</div>'
+        );
+        layer.bindTooltip(
+          '<span style="font-family:\'IBM Plex Mono\',monospace;font-size:10px;">' + f.properties.obs_pt + '</span>',
+          { direction: 'top', offset: [0, -8] }
+        );
+      }
+    }).addTo(map);
+
+    function txtMarker(lat, lng, text, sub) {
+      L.marker([lat, lng], {
+        icon: L.divIcon({
+          className: '',
+          html: '<div style="font-family:\'IBM Plex Sans\',sans-serif;font-size:11px;font-weight:500;color:#444;'
+            + 'text-shadow:1px 1px 0 rgba(255,255,255,0.9),-1px -1px 0 rgba(255,255,255,0.9),1px -1px 0 rgba(255,255,255,0.9),-1px 1px 0 rgba(255,255,255,0.9);'
+            + 'white-space:nowrap;line-height:1.3;">' + text
+            + (sub ? '<div style="font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:#aaa;font-family:\'IBM Plex Mono\',monospace;">' + sub + '</div>' : '')
+            + '</div>',
+          iconAnchor: [0, 0]
+        }),
+        interactive: false
+      }).addTo(map);
+    }
+    txtMarker(47.5710, 7.5760, 'St. Johann', 'Quartier');
+    txtMarker(47.5740, 7.5820, 'Klybeck', 'Quartier');
+    txtMarker(47.5710, 7.5840, 'Klybeckstrasse');
+    txtMarker(47.5700, 7.5780, 'Elsässerstrasse');
+    txtMarker(47.5620, 7.6000, 'Grenzacherstrasse');
+    txtMarker(47.5590, 7.6070, 'Grenzach-Wyhlen', '(DE)');
+    txtMarker(47.5640, 7.6110, 'Rhein');
+
+    var legend = L.control({ position: 'bottomright' });
+    legend.onAdd = function() {
+      var d = L.DomUtil.create('div');
+      d.style.cssText = 'background:white;padding:12px 14px;font-family:IBM Plex Mono,monospace;font-size:10px;line-height:2;letter-spacing:0.06em;border-top:3px solid #1a1a18;box-shadow:0 2px 8px rgba(0,0,0,0.1);';
+      d.innerHTML =
+        '<div style="margin-bottom:4px;font-size:9px;text-transform:uppercase;letter-spacing:0.12em;color:#aaa;">Legend</div>'
+        + '<div><span style="display:inline-block;width:12px;height:12px;background:#2a4a6b;opacity:0.7;margin-right:8px;vertical-align:middle;"></span>Novartis Campus</div>'
+        + '<div><span style="display:inline-block;width:12px;height:12px;background:#1a1a18;opacity:0.7;margin-right:8px;vertical-align:middle;"></span>Roche Campus</div>'
+        + '<div><span style="display:inline-block;width:20px;height:0;border-top:3px dashed #c8832a;margin-right:8px;vertical-align:middle;"></span>Selected fringe</div>'
+        + '<div><span style="display:inline-block;width:10px;height:10px;background:#b83232;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px #b83232;margin-right:8px;vertical-align:middle;"></span>Observation point</div>';
+      return d;
+    };
+    legend.addTo(map);
+
+    var s = document.createElement('style');
+    s.textContent = [
+      '.campus-lbl{background:transparent!important;border:none!important;box-shadow:none!important;}',
+      '.fringe-lbl{background:rgba(255,255,255,0.95)!important;border:1px solid #c8832a!important;box-shadow:none!important;padding:4px 8px!important;}',
+      '.leaflet-popup-content-wrapper{border-radius:0!important;border-top:3px solid #b83232!important;box-shadow:0 2px 12px rgba(0,0,0,0.12)!important;}',
+      '.leaflet-popup-tip{display:none;}'
+    ].join('');
+    document.head.appendChild(s);
+
+    map.fitBounds(campusLayer.getBounds().pad(0.20));
+    [300, 800, 1600].forEach(function(t) {
+      setTimeout(function() { map.invalidateSize(); }, t);
+    });
+  }
+
+  // Three triggers to cover all mobile/desktop timing scenarios:
+  // 1. If DOM is already ready (script runs late in page)
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    setTimeout(initMap, 100);
+  }
+  // 2. DOMContentLoaded — fires as soon as HTML is parsed
+  document.addEventListener('DOMContentLoaded', function() { setTimeout(initMap, 100); });
+  // 3. window load — fires after all resources (CSS, images) loaded
+  window.addEventListener('load', function() { setTimeout(initMap, 100); });
+  </script>
+
+  <div class="sites-grid">
+    <div class="site-card">
+      <div class="site-label">Site 01</div>
+      <div class="site-name">Roche Campus</div>
+      <p>One of the world's largest pharmaceutical headquarters, Roche's Basel campus occupies a substantial block along the Rhine. Its border conditions range from active streetfronts to fortified service edges.</p>
+      <p style="font-size:12px; color:#888; font-family: 'IBM Plex Mono', monospace;">Two fringe areas selected for observation based on their contrasting spatial characteristics.</p>
+      <ul class="fringe-list">
+        <li>Roche's Fringe 1 — East boundary<span>Comprises green areas and a pedestrian passage along the Campus, facing low-rise terraced houses</span></li>
+        <li>Roche's Fringe 2 — West boundary<span>Comprises a transition from high-intensity roads to semi-private residential backyards</span></li>
+      </ul>
+    </div>
+    <div class="site-card">
+      <div class="site-label">Site 02</div>
+      <div class="site-name">Novartis Campus</div>
+      <p>The Novartis campus in St. Johann is a deliberate urban planning project — a "campus city" designed by invited architects. Its relationship to the surrounding neighbourhood raises sharp questions about enclosure and publicness.</p>
+      <p style="font-size:12px; color:#888; font-family: 'IBM Plex Mono', monospace;">Another selection of two fringe areas based on their contrasting spatial characteristics.</p>
+      <ul class="fringe-list">
+        <li>Novartis' Fringe 1 — South boundary<span>This fringe comprises the most important urban articulation elements - the park and promenade along the Rhine</span></li>
+        <li>Novartis' Fringe 2 — Central roads<span>Unlike the other fringes, this one extends towards the interior of the campus (this choice is motivated by the semi-public nature of Novartis campus)</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="content-block blue">
+    <h4>On the Selection of Fringe Areas</h4>
+    <p>A fringe area is not simply a boundary line. It is a spatial zone of transition — typically 20–80 metres wide — where the rules, materials, and rhythms of the campus begin to dissolve into those of the surrounding city. When analyzing a fringe, look for areas that are <em>actively used or potentially usable</em>, not just visually interesting. Also, explore contrasts: a fringe that appears highly permeable alongside one that appears closed or indeterminate.</p>
+  </div>
+
+  <!-- PILLAR 1: SPATIAL DESCRIPTION -->
+  <div class="section-header">
+    <span class="section-number">03 —</span>
+    <span class="section-title">Pillar 1 — Spatial Description</span>
+  </div>
+
+  <div class="pilar">
+    <div class="mapping-tasks">
+      <div class="map-task t1">
+        <h5>Land Cover Mapping</h5>
+        <p>Document how the ground is surfaced across the fringe zone.</p>
+        <ul>
+          <li>Pavement (material type)</li>
+          <li>Planted / soft ground</li>
+          <li>Gravel / bare earth</li>
+          <li>Vehicular surface</li>
+          <li>Ambiguous / transitional</li>
+        </ul>
+      </div>
+      <div class="map-task t2">
+        <h5>Façade &amp; Edge Materiality</h5>
+        <p>Record the primary materials and visual character of the boundary edge.</p>
+        <ul>
+          <li>Fence type and opacity</li>
+          <li>Wall material and height</li>
+          <li>Planted screening</li>
+          <li>Glazing / openings</li>
+          <li>Signage and branding</li>
+        </ul>
+      </div>
+      <div class="map-task t3">
+        <h5>Physical Barriers</h5>
+        <p>Mark clearly where movement is blocked, filtered, or redirected.</p>
+        <ul>
+          <li>Controlled access points</li>
+          <li>Passive deterrents (bollards, planters)</li>
+          <li>Grade changes / drops</li>
+          <li>Unmarked but effective barriers</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="content-block accent">
+      <h4>Drawing Conventions</h4>
+      <p>Produce a plan at a 1:200 scale. Indicate North, scale bar, and fringe zone boundary. Use a simple but consistent legend across all four fringe maps so that findings can be compared. Annotate with photographs keyed to the plan. Mark the predetermined observation spots (red dots on the map above).</p>
+    </div>
+  </div><!-- /pilar FIX 4: was missing -->
+
+  <!-- PILLAR 2: TIMED OBSERVATION -->
+  <div class="section-header">
+    <span class="section-number">04 —</span>
+    <span class="section-title">Pillar 2 — Structured Observation</span>
+  </div>
+
+  <div class="pilar">
+    <div class="content-block">
+      <h4>Setup</h4>
+      <p><a href="https://sk.sagepub.com/ency/edvol/research/chpt/structured-observation" target="_blank" style="color: inherit; font-weight: bold; font-style: inherit;">Structured observation</a> is a specific <strong>method</strong> to systematically collect data according to a set of predefined rules and procedures. It is at the core of Gehl's PSPL approach, and is introduced in this exercise as a means to analyze everyday life in the selected fringe spaces.</p>
+      <p>In practice, one student is assigned to a single spot, where they will observe and count users, classifying their activity based on a predetermined categorization scheme (see details below). Maintain consistent spot positioning — stand or sit at the same point each time. Do not move around during the 15-minute window. The goal is temporal comparison at a fixed vantage point.</p>
+    </div>
+
+    <h4 style="font-size:13px; text-transform:uppercase; letter-spacing:0.08em; color:#555; margin: 20px 0 12px; font-family:'IBM Plex Sans',sans-serif; font-weight:500;">Observation Windows</h4>
+
+    <div class="time-grid">
+      <div class="time-slot">
+        <span class="time">09:00</span>
+        <div class="time-label">Morning</div>
+        <div class="duration-note">15 min</div>
+      </div>
+      <div class="time-slot">
+        <span class="time">12:00</span>
+        <div class="time-label">Midday</div>
+        <div class="duration-note">15 min</div>
+      </div>
+      <div class="time-slot">
+        <span class="time">15:00</span>
+        <div class="time-label">Afternoon</div>
+        <div class="duration-note">15 min</div>
+      </div>
+      <div class="time-slot">
+        <span class="time">17:00</span>
+        <div class="time-label">Evening</div>
+        <div class="duration-note">15 min</div>
+      </div>
+    </div>
+    <p style="font-size:12px; color:#888; margin-bottom:20px; font-style:italic;">Tip: 09:00 and 17:00 may capture commuting flows in or out of the campus. 12:00 may surface lunch-hour patterns. 15:00 often reflects a quieter moment — useful as a baseline.</p>
+
+    <h4 style="font-size:13px; text-transform:uppercase; letter-spacing:0.08em; color:#555; margin: 20px 0 12px; font-family:'IBM Plex Sans',sans-serif; font-weight:500;">What to Record — Per Passant</h4>
+
+    <div class="obs-grid">
+      <div class="obs-category">
+        <h5>Frequency</h5>
+        <p style="font-size:12px; color:#555; margin-bottom:10px;">Tally count — how many people pass through or occupy the spot during the 15-minute window. Record as a running total. Try not to count a same person twice within a same 15-minute window.</p>
+      </div>
+      <div class="obs-category">
+        <h5>Age Group (estimated)</h5>
+        <div class="obs-pills">
+          <span class="pill">Child (&lt;12)</span>
+          <span class="pill">Youth (12–25)</span>
+          <span class="pill">Adult (25–60)</span>
+          <span class="pill">Older adult (60+)</span>
+        </div>
+        <p style="font-size:11px; color:#999; margin-top:8px;">Note: this is an approximate (perceived) category, not confirmed. Record what is visible by you.</p>
+      </div>
+      <div class="obs-category">
+        <h5>Perceived Sex</h5>
+        <div class="obs-pills">
+          <span class="pill">Male-presenting</span>
+          <span class="pill">Female-presenting</span>
+        </div>
+        <p style="font-size:11px; color:#999; margin-top:8px;">Note: this is an approximate (perceived) category, not confirmed. Record what is visible by you.</p>
+      </div>
+      <div class="obs-category">
+        <h5>Activity Type</h5>
+        <div style="margin-bottom:8px;">
+          <div style="font-size:10px; text-transform:uppercase; letter-spacing:0.08em; color:#2a4a6b; margin-bottom:5px;">Active</div>
+          <div class="obs-pills">
+            <span class="pill active-use">Regular walking</span>
+            <span class="pill active-use">Cycling</span>
+            <span class="pill active-use">Sports (except cycling) / playing</span>
+            <span class="pill active-use">Taking kids outdoors (for play)</span>
+            <span class="pill active-use">Dog walking</span>
+            <span class="pill active-use">Other active</span>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:10px; text-transform:uppercase; letter-spacing:0.08em; color:#b83232; margin-bottom:5px;">Static</div>
+          <div class="obs-pills">
+            <span class="pill static-use">Resting/chilling</span>
+            <span class="pill static-use">Meeting with people</span>
+            <span class="pill static-use">Eating outside</span>
+            <span class="pill static-use">Other static</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /pilar FIX 4: was missing -->
+
+  <!-- PILLAR 3: SURVEY -->
+  <div class="section-header">
+    <span class="section-number">05 —</span>
+    <span class="section-title">Pillar 3 — Short Survey</span>
+  </div>
+
+  <!-- FIX 1: single .pilar wrapping ALL survey content, closed once after Q5 -->
+  <div class="pilar">
+    <div class="content-block accent">
+      <h4>Before You Start</h4>
+      <p>All survey participants must be <strong>18 years or older</strong>. Introduce yourself briefly: your name, that you are students from the University of Basel studying the relationship between the campus and the neighbourhood, and that the survey takes approximately 3-5 minutes. Participation is voluntary and anonymous. Carry your informed consent form and offer it to participants who wish to read it. Record responses yourself; do not hand the questionnaire to the participant.</p>
+    </div>
+
+    <div class="content-block">
+      <h4>Target</h4>
+      <p>Target a minimum of <strong>12 completed surveys per fringe area</strong>. Distribute surveys across the three observation points (each fringe has three). If a person declines, it does not count as a participation. Use a printed sheet or a simple digital form — whichever allows faster recording.</p>
+    </div>
+
+    <h4 style="font-size:13px; text-transform:uppercase; letter-spacing:0.08em; color:#555; margin: 28px 0 4px; font-family:'IBM Plex Sans',sans-serif; font-weight:500;">Questionnaire</h4>
+    <p style="font-size:12px; color:#888; margin-bottom:20px; font-style:italic;">Questions are ordered: frequency → usage → profile. Read each question aloud; record the answer. The survey should not exceed 3–5 minutes per participant.</p>
+
+    <!-- Q0 -->
+    <div class="survey-question">
+      <div class="q-meta">
+        <div class="q-code">Q0 · Age group</div>
+        <div class="q-type-badge">Select ONE</div>
+      </div>
+      <div>
+        <div class="q-text">What is your age group?</div>
+        <ul class="q-options">
+          <li>Under 18 — <em style="font-size:11px; color:#b83232;">note: if under 18, thank them and end the survey</em></li>
+          <li>18 – 30</li>
+          <li>31 – 50</li>
+          <li>51 – 65</li>
+          <li>65+</li>
+          <li class="na">Prefers not to say</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Q1 -->
+    <div class="q-divider">Module A — Frequency &amp; Usage</div>
+    <div class="survey-question">
+      <div class="q-meta">
+        <div class="q-code">Q1 · Frequency</div>
+        <div class="q-type-badge">Select ONE</div>
+      </div>
+      <div>
+        <div class="q-text">How often do you come to this place — including simple passages, without stopping?</div>
+        <ul class="q-options">
+          <li>At least once every day</li>
+          <li>At least once every week</li>
+          <li>At least once a month</li>
+          <li>Less than once a month</li>
+          <li class="na">Does not know / prefers not to answer</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="survey-question">
+      <div class="q-meta">
+        <div class="q-code">Q2 · Usage</div>
+        <div class="q-type-badge">Select MULTIPLE</div>
+      </div>
+      <div>
+        <div class="q-text">What are the main purposes for which you come to this place?</div>
+        <!-- FIX 2: conditional-note wrapped in <li class="conditional"> instead of bare <div> inside <ul> -->
+        <ul class="q-options">
+          <li class="multi">A path between two destinations (passing through)</li>
+          <li class="conditional"><span class="conditional-note">↳ If selected: is this path chosen for an intrinsic quality, or simply as the shortest route?</span></li>
+          <li class="multi">Relaxing</li>
+          <li class="multi">Playing</li>
+          <li class="multi">Social gathering</li>
+          <li class="multi na">Does not know / prefers not to answer</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="survey-question">
+      <div class="q-meta">
+        <div class="q-code">Q3 · Main purpose</div>
+        <div class="q-type-badge">Select ONE</div>
+        <div style="font-size:10px; color:#aaa; margin-top:6px; font-style:italic;">Only if more than one option selected in Q2</div>
+      </div>
+      <div>
+        <div class="q-text">And what is the single most important purpose for you to come to this place?</div>
+        <ul class="q-options">
+          <li>A path between two destinations</li>
+          <li>Relaxing</li>
+          <li>Playing</li>
+          <li>Social gathering</li>
+          <li class="na">Does not know / prefers not to answer</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Profile divider -->
+    <div class="q-divider">Module B — Participant Profile</div>
+
+    <!-- Q4 -->
+    <div class="survey-question">
+      <div class="q-meta">
+        <div class="q-code">Q4 · Place of residence</div>
+        <div class="q-type-badge">Select ONE</div>
+      </div>
+      <div>
+        <div class="q-text">Where do you live?</div>
+        <ul class="q-options">
+          <li>Basel — same neighbourhood (within approx. 15 min walk)</li>
+          <li>Basel — more than 15 minutes away on foot</li>
+          <li>Outside Basel</li>
+          <li class="na">Prefers not to say</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="survey-question">
+      <div class="q-meta">
+        <div class="q-code">Q5 · Gender</div>
+        <div class="q-type-badge">Select ONE</div>
+      </div>
+      <div>
+        <div class="q-text">How do you describe your gender?</div>
+        <ul class="q-options">
+          <li>Woman</li>
+          <li>Man</li>
+          <li>Non-binary</li>
+          <li>Other</li>
+          <li class="na">Prefers not to say</li>
+        </ul>
+      </div>
+    </div>
+
+  </div><!-- /pilar — FIX 1: single closing tag here, after Q5 -->
+
+  <!-- SECTION 6: OUTPUTS -->
+  <div class="section-header">
+    <span class="section-number">06 —</span>
+    <span class="section-title">Expected Outputs</span>
+  </div>
+
+  <div class="outputs-grid">
+    <div class="output-item">
+      <div class="output-tag">Spatial</div>
+      <h5>Annotated Plans</h5>
+      <p>Four fringe area maps (one per selected site) with consistent scale, legend, land cover, barriers, and observation spots marked. Keyed photographs.</p>
+    </div>
+    <div class="output-item">
+      <div class="output-tag">Quantitative</div>
+      <h5>Structured Observation Data</h5>
+      <p>Compiled tally sheets per spot per time window, totalling 32 observation sessions across both campuses. Summary tables comparing flow volumes, activity types, and temporal variation.</p>
+    </div>
+    <div class="output-item">
+      <div class="output-tag">Qualitative</div>
+      <h5>Structured Questionnaire Results</h5>
+      <p>Minimum 48 completed surveys (12 per fringe area). Visual summaries (simple charts or annotated bar graphs) of frequency, usage, and profile distributions.</p>
+    </div>
+  </div>
+
+  <div class="content-block blue">
+    <h4>Towards the Exhibition</h4>
+    <p>Your findings from this exercise will feed directly into the final exhibition at the Atrium of the Department of Construction and Transport, Münsterplatz 11. Think about how these three data types can be presented spatially: a plan with overlaid flow data, a comparative diagram of Roche vs. Novartis fringes, or a visual portrait of who uses these spaces and why. The quantitative outputs should not be reduced to tables alone — consider how they can be made visual and communicative for a non-specialist audience.</p>
+  </div>
+
+  <!-- SECTION 7: LOGISTICS -->
+  <div class="section-header">
+    <span class="section-number">07 —</span>
+    <span class="section-title">Team Organisation</span>
+  </div>
+
+  <div class="logistics-table-wrapper">
+  <table class="logistics-table">
+    <thead>
+      <tr>
+        <th>Role</th>
+        <th>Task</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Mapper (1–2 students in each team)</td>
+        <td>Spatial description of fringe area; plan production; photography</td>
+        <td>Can be done before timed observation windows; requires min. 1 site visit with measuring tape or pacing</td>
+      </tr>
+      <tr>
+        <td>Observer / Counter (1 student per spot)</td>
+        <td>Timed count and activity classification at each spot</td>
+        <td>Remain stationary; do not interact with passers-by</td>
+      </tr>
+      <tr>
+        <td>Surveyor (1–2 students)</td>
+        <td>Approach users, administer questionnaire, record responses</td>
+        <td>Do not conduct surveys during timed observation windows — right before or after is preferable to avoid bias</td>
+      </tr>
+      <tr>
+        <td>All students</td>
+        <td>Site debrief notes — qualitative impressions, anomalies, surprises</td>
+        <td>Essential complement to quantitative data; record immediately after each session</td>
+      </tr>
+    </tbody>
+  </table>
+  </div><!-- /logistics-table-wrapper -->
+
+  <div class="content-block">
+    <h4>Materials to Bring to Site</h4>
+    <p>Printed recording sheets for structured observations · Printed survey questionnaires (n=20 for each team) · Informed consent form (n=20 for each team) · Clipboard · Measuring tape or wheel · Camera or smartphone · Watch or phone with stopwatch.</p>
+  </div>
+
+</div><!-- /page-body -->
+
+<footer>
+  <span>Urbanisms of the Health Industry · UAG Track · MA Critical Urbanisms · University of Basel</span>
+  <span>Brief 3 — Building as Catalyst · Weeks 8–10 · Exercise Guide v1.1</span>
+  <span>Method based on <a href="https://www.gehlpeople.com/approach/" target="_blank">Gehl PSPL Survey</a></span>
+</footer>
+
+</body>
+</html>
