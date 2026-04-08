@@ -1096,12 +1096,84 @@
     };
     legend.addTo(map);
 
+    // ── GPS LOCATE CONTROL ───────────────────────────────
+    var locateControl = L.control({ position: 'topleft' });
+    locateControl.onAdd = function() {
+      var btn = L.DomUtil.create('button');
+      btn.title = 'Show my location';
+      btn.style.cssText = [
+        'width:36px;height:36px;',
+        'background:white;border:none;',
+        'border-top:3px solid #1a1a18;',
+        'cursor:pointer;',
+        'display:flex;align-items:center;justify-content:center;',
+        'box-shadow:0 2px 8px rgba(0,0,0,0.12);',
+        'padding:0;'
+      ].join('');
+      btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1a1a18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/></svg>';
+
+      var locationMarker = null;
+      var locationCircle = null;
+
+      L.DomEvent.on(btn, 'click', function(e) {
+        L.DomEvent.stopPropagation(e);
+
+        // Visual feedback while locating
+        btn.style.borderTopColor = '#c8832a';
+
+        map.locate({ setView: false, maxZoom: 17, enableHighAccuracy: true });
+
+        map.once('locationfound', function(e) {
+          btn.style.borderTopColor = '#1a1a18';
+
+          // Remove previous position markers
+          if (locationMarker) { map.removeLayer(locationMarker); }
+          if (locationCircle) { map.removeLayer(locationCircle); }
+
+          // Accuracy circle
+          locationCircle = L.circle(e.latlng, {
+            radius: e.accuracy / 2,
+            color: '#2a4a6b',
+            weight: 1,
+            fillColor: '#2a4a6b',
+            fillOpacity: 0.08
+          }).addTo(map);
+
+          // Position dot — pulsing via CSS animation
+          locationMarker = L.circleMarker(e.latlng, {
+            radius: 8,
+            color: '#fff',
+            weight: 3,
+            fillColor: '#2a4a6b',
+            fillOpacity: 1,
+            className: 'location-pulse'
+          }).addTo(map)
+            .bindPopup('<div style="font-family:\'IBM Plex Mono\',monospace;font-size:11px;color:#2a4a6b;">You are here</div>')
+            .openPopup();
+
+          // Pan to user without disrupting zoom level
+          map.panTo(e.latlng);
+        });
+
+        map.once('locationerror', function() {
+          btn.style.borderTopColor = '#b83232';
+          setTimeout(function() { btn.style.borderTopColor = '#1a1a18'; }, 2000);
+          alert('Location unavailable. Please allow location access in your browser settings.');
+        });
+      });
+
+      return btn;
+    };
+    locateControl.addTo(map);
+
     var s = document.createElement('style');
     s.textContent = [
       '.campus-lbl{background:transparent!important;border:none!important;box-shadow:none!important;}',
       '.fringe-lbl{background:rgba(255,255,255,0.95)!important;border:1px solid #c8832a!important;box-shadow:none!important;padding:4px 8px!important;}',
       '.leaflet-popup-content-wrapper{border-radius:0!important;border-top:3px solid #b83232!important;box-shadow:0 2px 12px rgba(0,0,0,0.12)!important;}',
-      '.leaflet-popup-tip{display:none;}'
+      '.leaflet-popup-tip{display:none;}',
+      '@keyframes pulse{0%{transform:scale(1);opacity:1;}50%{transform:scale(1.5);opacity:0.5;}100%{transform:scale(1);opacity:1;}}',
+      '.location-pulse{animation:pulse 2s ease-in-out infinite;}'
     ].join('');
     document.head.appendChild(s);
 
